@@ -1,0 +1,272 @@
+<#include "_layout.html">
+<head>
+    <title>搜索结果</title>
+    <link href="${ctx}/static/css/flowerList.css" rel="stylesheet" type="text/css">
+</head>
+<@layout>
+<script type="text/javascript">
+
+    function getQueryString(key){
+        var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");
+        var result = window.location.search.substr(1).match(reg);
+        return result?decodeURIComponent(result[2]):null;
+    }
+
+    function searchMode(mode) {
+        console.log(mode);
+        var url = window.location.href;
+        if (getQueryString('searchMode') == null && getQueryString('keyword') == null) {
+            url = url + "?searchMode=" + mode;
+            window.location.href = url;
+            return;
+        }
+        if (getQueryString('searchMode') == null) {
+            url = url + "&searchMode=" + mode;
+            window.location.href = url;
+            return;
+        }
+        var str = getQueryString('searchMode');
+        console.log(str);
+        url = url.replace(str, mode);
+        console.log(url);
+        window.location.href = url;
+    }
+
+    function addKeyword(keyword) {
+        if (getQueryString('keyword') == null) {
+            return keyword;
+        }
+        var oldKeyword = getQueryString('keyword');
+        if (oldKeyword.indexOf(keyword) != -1) {
+            return oldKeyword;
+        }
+        return oldKeyword + "+" + keyword;
+    }
+
+    function removeKeyword(keyword) {
+        var oldKeyword = getQueryString('keyword');
+        // 只有这一个参数
+        if (oldKeyword.indexOf('+') == -1) {
+            oldKeyword = oldKeyword.replace(keyword, "");
+            return oldKeyword;
+        }
+        // 末位
+        if (oldKeyword.indexOf('+' + keyword) != -1) {
+            oldKeyword = oldKeyword.replace('+' + keyword, "");
+            return oldKeyword;
+        }
+        // 首位
+        if (oldKeyword.indexOf(keyword + '+') != -1) {
+            oldKeyword = oldKeyword.replace(keyword + '+', "");
+            return oldKeyword;
+        }
+        return '';
+    }
+
+    $(function () {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+        });
+    });
+</script>
+<body>
+    <div class="nch-module nch-module-style01" style="width: 980px;margin: 20px auto 0;">
+        <div class="title"><h3>商品筛选</h3> </div>
+        <div class="content">
+            <div class="nch-module-filter">
+                <#if codeExist??>
+                    <dl>
+                        <dt>您已选择:</dt>
+                        <dd class="list">
+                        <#list codeList as code>
+                            <#if codeExist?contains(code.typeName)>
+                                <span class="selected"><em>${code.typeName}</em>
+                                    <a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword=' + removeKeyword('${code.typeName}')"><i>X</i></a>
+                                </span>
+                            </#if>
+                        </#list>
+                        <span class="selected_clear">
+                            <a href="${ctx}/flower/flowerList"> <em>清空筛选</em></a>
+                        </span>
+                        </dd>
+                    </dl>
+                </#if>
+                <dl>
+                    <dt>用途:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '用途'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>花材:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '花材'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>价格:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '价格'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>对象:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '对象'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>节日:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '节日'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>枝数:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '枝数'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>类型:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '类型'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>颜色:</dt>
+                    <dd class="list">
+                        <ul>
+                            <#if codeList?? && (codeList?size > 0)>
+                                <#list codeList as code>
+                                    <#if code.fatherName == '颜色'>
+                                        <li><a href="javascript:;" onclick="window.location.href='${ctx}/flower/flowerList?keyword='+addKeyword('${code.typeName}')">${code.typeName}</a></li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sort-bar" style="width: 980px;margin: 10px auto 0;">
+        <div class="pagination"></div>
+        <div class="nch-all-category">
+            <div class="all-category"> </div>
+        </div>
+        <div class="nch-sortbar-array"> 排序方式：
+            <ul>
+                <#if searchMode?? && searchMode == 'default'>
+                    <li class="selected"><a class="desc" href="javascript:void(0);" onclick="searchMode('default')" title="默认排序">默认<i></i></a></li>
+                <#else>
+                    <li><a href="javascript:void(0);" title="默认排序" onclick="searchMode('default')">默认<i></i></a></li>
+                </#if>
+                <#if searchMode?? && searchMode == 'sale'>
+                    <li class="selected"><a class="desc"  href="javascript:void(0);" onclick="searchMode('sale')">销量<i></i></a></li>
+                <#else>
+                    <li><a href="javascript:void(0);" onclick="searchMode('sale')">销量<i></i></a></li>
+                </#if>
+                <#if searchMode?? && searchMode == 'popular'>
+                    <li class="selected"><a class="desc" href="javascript:void(0);" onclick="searchMode('popular')">人气<i></i></a></li>
+                <#else>
+                    <li><a href="javascript:void(0);" onclick="searchMode('popular')">人气<i></i></a></li>
+                </#if>
+                <#if searchMode?? && searchMode == 'price'>
+                    <li class="selected"><a class="desc" href="javascript:void(0);" onclick="searchMode('price')">价格<i></i></a></li>
+                <#else>
+                    <li><a href="javascript:void(0);" onclick="searchMode('price')">价格<i></i></a></li>
+                </#if>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="good-list">
+        <ul>
+            <#list flowerList as flower>
+                <#if flower.flowerStatus == "00" >
+                    <li>
+                        <div class="good-content" style="float: left;display: inline">
+                            <div class="good-pic">
+                                <a href="${ctx}/flower/${flower.flowerId}" title="${flower.flowerName}" target="_blank">
+                                    <img src="${flower.pictureUrl}" data-original="${flower.pictureUrl}" alt="${flower.flowerName}" style="display: inline;">
+                                </a>
+                            </div>
+
+                            <div class="good-info">
+                                <div class="good-name">
+                                    <a style="font-size:13px;" href="${ctx}/flower/${flower.flowerId}" target="_blank" title="">${flower.flowerName}<br>
+                                        <em style="font-size:12px;">${flower.material}</em>
+                                    </a>
+                                </div>
+
+                                <div class="good-price">
+                                    <em class="sale-price" title="商城价：¥${flower.price * flower.discount}">¥${flower.price * flower.discount}</em>
+                                    <em class="market-price" title="市场价：¥${flower.price}">¥${flower.price}</em>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </#if>
+            </#list>
+        </ul>
+    </div>
+</body>
+</@layout>

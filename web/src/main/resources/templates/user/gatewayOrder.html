@@ -1,0 +1,212 @@
+<#assign ctx = request.getContextPath()>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>订单列表</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/common/jquery.js"></script>
+    <script src="${ctx}/static/layui/layui.js"></script>
+</head>
+<script type="text/javascript">
+    $(function () {
+        layui.use(['form', 'layer', 'table', 'laydate'], function () {
+            var table = layui.table
+                , form = layui.form
+                , laydate = layui.laydate
+                , layer = layui.layer;
+
+            laydate.render({
+                elem: '#startTime'
+            });
+            laydate.render({
+                elem: '#endTime'
+            });
+
+            table.render({
+                id: 'dataGrid'
+                , elem: '#dataGrid'
+                , url: '${ctx}/gatewayOrder/dataGrid'
+                , toolbar: '#toolbar'
+                , height: '500px'
+                , cellMinWidth: 80
+                , cols: [[
+                    {type:'radio'}
+                    , {field: 'gatewayOrdId', title: '订单号', width: 80, sort: true}
+                    , {field: 'gatewaySysTime', title: '时间', width: 200, sort: true}
+                    , {field: 'txnRemark', title: '商品', width: 200}
+                    , {field: 'txnAmt', title: '交易金额', width: 100}
+                    , {field: 'txnType', title: '交易类型', width: 100}
+                    , {field: 'status', title: '状态', width: 100}
+                ]]
+                , page: {
+                    theme: '#FF5722'
+                    , layout: ['limit', 'count', 'prev', 'page', 'next']
+                    , groups: 1
+                }
+                , request: {
+                    pageName: 'currPage' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                }
+                , response: {
+                    code: 'result' //数据状态的字段名称，默认：code
+                    , count: 'totalCount' //数据总数的字段名称，默认：count
+                }
+                , method:'POST'
+                , loading: true
+                , limit: 10
+                , done: function (res) {
+                    $("[data-field='status']").children().each(function(){
+                        if($(this).text() === '00'){
+                            $(this).text("已接单")
+                        } else if($(this).text() === '01'){
+                            $(this).text("已发货")
+                        } else if($(this).text() === '02'){
+                            $(this).text("拒绝接单")
+                        } else if($(this).text() === '99'){
+                            $(this).text("待处理")
+                        }
+                    });
+                    $("[data-field='txnType']").children().each(function(){
+                        if($(this).text() === 'A001'){
+                            $(this).text("待付款")
+                        } else if($(this).text() === 'A002'){
+                            $(this).text("已付款")
+                        } else if($(this).text() === 'A003'){
+                            $(this).text("退款")
+                        }
+                    });
+                    $("[data-field='txnAmt']").children().each(function(){
+                        $(this).text($(this).text() + "(元)")
+                    });
+                    $("[data-field='txnRemark']").children().each(function(){
+                        $(this).text($(this).text() + "...")
+                    });
+                }
+            });
+
+            table.on('toolbar(dataGrid)', function(obj){
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                var txnType = $("#txnType").val();
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'view':
+                        var data = checkStatus.data;
+                        if (data.length === 0) {
+                            layer.msg("请选中一条记录");
+                            return;
+                        }
+                        layer.open({
+                            title: "详细"
+                            ,icon: 1
+                            ,content: data[0].txnRemark
+                            ,area: ['300px', '400px']
+                            ,shade: false
+                            ,btn: ['关闭']
+                            ,yes: function(index, layero){
+                                layer.close(index);
+                            }
+                        });
+                        break;
+                    case 'query':
+                        table.reload('dataGrid', {
+                            where: {
+                                'startTime': startTime,
+                                'endTime': endTime,
+                                'txnType': txnType
+                            }
+                        });
+                        break;
+                    case 'pay':
+                        var data = checkStatus.data;
+                        if (data.length === 0) {
+                            layer.msg("请选中一条记录");
+                            return;
+                        }
+                        layer.open({
+                            title: "支付"
+                            ,type: 2
+                            ,icon: 1
+                            ,content: '${ctx}/gatewayOrder/payPwdForm?gatewayOrdId=' + data[0].gatewayOrdId
+                            ,area: ['300px', '250px']
+                            ,shade: false
+                            ,btn: ['关闭']
+                            ,yes: function(index, layero){
+                                table.reload('dataGrid', {
+                                    where: {
+                                        'startTime': startTime,
+                                        'endTime': endTime,
+                                        'txnType': txnType
+                                    }
+                                });
+                                layer.close(index);
+                            }
+                        });
+                        break;
+                }
+            });
+
+        });
+    })
+</script>
+<body>
+<#--操作按钮-->
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="view">详细</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="query">查询</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="pay">付款</button>
+    </div>
+</script>
+<div class="layui-form">
+    <table>
+        <tr>
+            <td>
+                <#--开始时间-->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始时间:</label>
+                        <div class="layui-input-inline" style="width: 100px">
+                            <input id="startTime" name="startTime" type="text" class="layui-input" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <#--结束时间-->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束时间:</label>
+                        <div class="layui-input-inline" style="width: 100px">
+                            <input id="endTime" name="endTime" type="text" class="layui-input" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <#--交易类型-->
+                <div class="layui-form-item" >
+                    <label class="layui-form-label">交易类型</label>
+                    <div class="layui-input-block">
+                        <select id="txnType" name="txnType">
+                            <option value=""></option>
+                            <option value="A001">待付款</option>
+                            <option value="A002">已付款</option>
+                            <option value="A003">取消订单(退款)</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+    <#--查询结果-->
+    <div style="padding: 15px;">
+        <table class="layui-hide" id="dataGrid" lay-filter="dataGrid"></table>
+    </div>
+</body>
+</html>

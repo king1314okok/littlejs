@@ -1,0 +1,79 @@
+<#assign ctx = request.getContextPath()>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>修改密码</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link href="${ctx}/static/css/findPwd.css" rel="stylesheet" type="text/css">
+    <link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/common/jquery.js"></script>
+    <script src="${ctx}/static/layui/layui.js"></script>
+</head>
+<body>
+<div class="resetpwd">
+    <div class="content-row fl clearfix">
+        <span class="fl"> 旧密码: </span>
+        <input id="oldPwd" name="oldPwd" class="clearfix" type="text">
+    </div>
+    <div class="prompt fl clearfix">
+        <span> 请输入之前使用的旧密码</span>
+    </div>
+    <div class="content-row fl clearfix">
+        <span class="fl"> 新密码: </span>
+        <input id="pwd" name="pwd" class="clearfix" type="text" maxlength="13">
+    </div>
+    <div class="prompt fl clearfix">
+        <span> 请输入想要修改的新密码</span>
+    </div>
+    <div class="content-row fl clearfix">
+        <span class="fl"> 再次输入: </span>
+        <input id="pwdAgain" name="pwdAgain" class="clearfix" type="text" maxlength="13">
+    </div>
+    <div class="prompt fl clearfix">
+        <span> 请再次输入想要修改的新密码</span>
+    </div>
+    <div  class="content-row fl clearfix">
+        <span class="fl"> 验证码: </span>
+        <input id="captcha" name="captcha" class="fl" type="text" placeholder="请输入验证码" maxlength="4" autocomplete="off">
+        <img id="captchaImg" name="captchaImg" class="fl" src="${ctx}/captcha" alt="" onclick="$(this).attr('src','${ctx}/captcha?'+new Date().getTime());">
+    </div>
+    <button onclick="resetPwd()">确定</button>
+</div>
+</body>
+<script type="text/javascript">
+    function resetPwd() {
+        var oldPwd = $('#oldPwd').val();
+        var pwd = $('#pwd').val();
+        var pwdAgain = $('#pwdAgain').val();
+        var captcha = $('#captcha').val();
+        $.ajax({
+            url: '${ctx}/doResetPwd',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                oldPwd: oldPwd,
+                pwd: pwd,
+                pwdAgain: pwdAgain,
+                captcha: captcha
+            },
+            success: function (result) {
+                if (!result.success) {
+                    $('#captchaImg').click();
+                    layer.msg(result.msg);
+                } else {
+                    layer.msg(result.msg);
+                    setTimeout("parent.location.reload();", 2000);
+                }
+            }
+        })
+    }
+
+    $(function () {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+        });
+    })
+</script>
+</html>

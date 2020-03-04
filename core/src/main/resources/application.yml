@@ -1,0 +1,80 @@
+server:
+  port: -1
+  servlet:
+    context-path: /core
+
+spring:
+  application:
+    name: littlejsCore
+
+  # 数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://x.x.x.x:3306/littleJS
+    username: root
+    password: 111111
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+  redis:
+    host: x.x.x.x
+    port: 6379
+    timeout: 300
+    password: 111111
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+  rabbitmq:
+    host: x.x.x.x
+    port: 5672
+    username: admin
+    password: 111111
+
+  mail:
+    host: smtp.qq.com
+    username: xxx@qq.com
+    password: xxx
+    port: 465
+    default-encoding: UTF-8
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
+  resources:
+    static-locations:
+      classpath:/resources/,
+      classpath:/static
+
+#logback
+logging:
+  config: classpath:logback.xml
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.oudake.core.model
+
+mail-queue-name: mail-queue
+core-queue-name: core-queue
+exchange-name: message-exchange
+saltKey: c/i/k5QlMjThyzUs+U481LIQkmTh1+7eeM+6RrwRNMpa8KK30rbZtNW+s5fPgVTCFCTfjoDIzqkLjGhf3nL/1Y7r81VpBrjHkCfK5tA3LbpUKQST8aIeE8yC4G+HPf9f4UoR8E/QRpqIEceHoiZObc4PlPC+1NXlaEmkctWfa7HbHy/Ca3l77MgWmTq60gYrwDLPHoH5gGxvb8VZCkLBPMbEcqjo0BVymk5bwvFWueptkk0k+/O5wAaGNDxQH2CUUnJg+Wilc+n3MhmF9g9nhc4BjWQefDx339apH0S7drQUvB5RRoCACZZqtl5l9kJYAwQL/U5ePDSJ02Y7j0GNYg==
+aesKey: YGp493GxDZegdvOPpEbEZwxci4bOZi7dNfSTkAdMaLdVwiSBz2ltCCXrBVS4UspLw/sMlJg7IzW0lVR8+AKXLi1sXHHuue4rI33/LPapQBTND4/vMozoZ3GbSuPFL+fm52XJaQKmBs3uRCttLGHv33qmv8M9NSCLp478AeLSLF49Eg3cOhYBZ+teHE4Noh3p/pFYae0COYiOhotc0Re0a56xDYh36t58T0DmDF89rScSXJRECa2Orqqnm9chToWJt4A3xtkNgyc+DpdtSp8yP4EGx8ZIW4bhxRtdsI0tv2Rnod/HRevZrp2tvUObxuiUmkiOUWvxmB1Guqr9BwRaBA==
+

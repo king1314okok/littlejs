@@ -1,0 +1,61 @@
+.flower-content {
+    height: 450px;
+    width: 1000px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 1px #EEE;
+}
+
+.flower-pic {
+    float: left;
+    height: 360px;
+    width: 360px;
+    border-right: solid 1px #EEE;
+    border-bottom: solid 1px #EEE;
+}
+
+.flower-pic img {
+    padding: 20px;
+    height: 320px;
+    width: 320px;
+}
+
+.flower-detail {
+    overflow:hidden;
+    height: 360px;
+    border-bottom: solid 1px #EEE;
+}
+
+.flower-detail .name {
+    padding: 15px 20px;
+    border-bottom: solid 1px #EEE;
+}
+
+.flower-detail .name h1 {
+    font: 700 16px/21px "Microsoft Yahei";
+    color: #333;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+}
+
+.flower-detail .meta {
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.meta label {
+    line-height: 30px;
+}
+
+.meta p {
+    font-size:12px;
+    font-weight:100;
+    padding-top:10px;
+}
+
+.cart {
+    overflow:hidden;
+}

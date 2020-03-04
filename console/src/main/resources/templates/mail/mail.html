@@ -1,0 +1,107 @@
+<#include "../_layout.html">
+<@layout>
+<head>
+    <title>邮件</title>
+    <script type="text/javascript" src="/static/wangEditor/wangEditor.min.js"></script>
+
+    <script type="text/javascript">
+
+        function isEmail(str){
+            var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+            return reg.test(str);
+        }
+
+        $(function () {
+            var E = window.wangEditor;
+            var editor = new E('#editor');
+            editor.create();
+
+            layui.use(['form', 'layer'], function () {
+                var form = layui.form
+                    , layer = layui.layer;
+
+                $('#sendBtn').click(function () {
+                    var toAddr = $('#toAddr').val();
+                    var title = $('#title').val();
+                    var txtHtml = editor.txt.html();
+                    if (toAddr === '') {
+                        layer.msg("请输入邮件地址");
+                        return;
+                    }
+                    if (!isEmail(toAddr)) {
+                        layer.msg("请验证邮件地址是否正确");
+                        return;
+                    }
+                    if (title === '') {
+                        layer.msg("请输入邮件标题");
+                        return;
+                    }
+                    if (txtHtml === '<p><br></p>') {
+                        layer.msg("请输入内容");
+                        return;
+                    }
+                    $.ajax({
+                        url: '${ctx}/mail/sendMail',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            toAddr: toAddr,
+                            title: title,
+                            context: txtHtml
+                        },
+                        success: function (result) {
+                            layer.msg(result.msg);
+                        }
+                    });
+                });
+
+            });
+        })
+    </script>
+
+    <style type="text/css">
+        .main {
+            margin-top: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+        .editor {
+            margin-top: 20px;
+            margin-left: 30px;
+        }
+    </style>
+
+</head>
+<body class="main">
+    <div class="layui-form">
+        <table>
+            <tr>
+                <td>
+                    <#-- 邮件地址toAddr -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">目标地址:</label>
+                        <div class="layui-input-block">
+                            <input id="toAddr" name="toAddr" type="text" placeholder="请输入邮件地址" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <#-- 邮件标题 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邮件标题:</label>
+                        <div class="layui-input-block">
+                            <input id="title" name="title" type="text" placeholder="请输入邮件标题" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="editor" style="width: 800px;" class="editor"></div>
+
+    <button id="sendBtn" name="sendBtn" class="layui-btn editor">发送</button>
+</body>
+</@layout>

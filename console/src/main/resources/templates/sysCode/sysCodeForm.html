@@ -1,0 +1,139 @@
+<#include "../_layout.html">
+<@layout>
+<script type="text/javascript">
+    $(function () {
+        layui.use(['layer', 'form'], function(){
+            var layer = layui.layer
+                ,form = layui.form;
+        });
+
+        $("#submitBtn").click(function(){
+            var url = '${ctx}/sysCode/${type}';
+            var type = $("#type").val();
+            var code = $("#code").val();
+            var status = $("input[name='status']:checked").val();
+            var showId = $("#showId").val();
+            var typeCn = $("#typeCn").val();
+            var typeEn = $("#typeEn").val();
+            var display1 = $("#display1").val();
+            var display2 = $("#display2").val();
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    type: type,
+                    code: code,
+                    status: status,
+                    showId: showId,
+                    typeCn: typeCn,
+                    typeEn: typeEn,
+                    display1: display1,
+                    display2: display2
+                },
+                success: function(result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+    });
+</script>
+<body>
+<div class="center layui-form" style="margin-top: 20px">
+    <table>
+        <#--类型-->
+        <tr>
+            <td colspan="4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="type" name="type" value="${(sysCode.type)!""}" placeholder="请输入类型" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <#--代码,排序-->
+        <tr>
+            <td>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">代码</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="code" name="code" value="${(sysCode.code)!""}" placeholder="请输入代码" autocomplete="off" class="layui-input" style="width:100px;">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input type="number" id="showId" name="showId" value="${(sysCode.showId)!""}" placeholder="请输入序号" autocomplete="off" class="layui-input" style="width:100px;">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="00" title="启用" checked>
+                        <input type="radio" name="status" value="01" title="停用">
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <#--中文描述,英文描述-->
+        <tr>
+            <td colspan="4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">中文描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="typeCn" name="typeCn" value="${(sysCode.typeCn)!""}" placeholder="请输入中文描述" autocomplete="off" class="layui-input" >
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">英文描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="typeEn" name="typeEn" value="${(sysCode.typeEn)!""}" placeholder="请输入英文描述" autocomplete="off" class="layui-input" >
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <#--值1,值2-->
+        <tr>
+            <td colspan="4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">值1</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="display1" name="display1" value="${(sysCode.display1)!""}" placeholder="请输入值1" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">值2</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="display2" name="display2" value="${(sysCode.display2)!""}" placeholder="请输入值2" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="submitBtn" name="submitBtn" lay-submit>立即提交</button>
+        </div>
+    </div>
+</div>
+</body>
+</@layout>

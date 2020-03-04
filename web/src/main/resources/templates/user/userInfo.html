@@ -1,0 +1,127 @@
+<#assign ctx = request.getContextPath()>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>用户信息</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <link href="${ctx}/static/css/userInfo.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/common/jquery.js"></script>
+    <script src="${ctx}/static/layui/layui.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+
+                form.val("userInfo", {
+                    "username": "${(user.username)!""}"
+                    ,"realName": "${(userInfo.realName)!""}"
+                    ,"userPhone": "${(userInfo.userPhone)!""}"
+                    ,"currency": "${(userInfo.currency)!""}"
+                    ,"userEmail": "${(userInfo.userEmail)!""}"
+                    ,"userAddr": "${(userInfo.userAddr)!""}"
+                });
+
+                $('#submitBtn').click(function () {
+                    var username = $('#username').val();
+                    var realName = $('#realName').val();
+                    var userPhone = $('#userPhone').val();
+                    var userEmail = $('#userEmail').val();
+                    var userAddr = $('#userAddr').val();
+                   $.ajax({
+                       url: '${ctx}/user/editUserInfo',
+                       type: 'post',
+                       dataType: 'json',
+                       data: {
+                           username: username,
+                           realName: realName,
+                           userPhone: userPhone,
+                           userEmail: userEmail,
+                           userAddr: userAddr
+                       },
+                       success: function (result) {
+                           layer.msg(result.msg);
+                       }
+                   })
+                });
+
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="main">
+    <div class="layui-form" lay-filter="userInfo">
+        <table style="width:500px;">
+            <tr>
+                <td>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input id="username" name="username" class="layui-input" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input id="realName" name="realName" class="layui-input" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input id="userPhone" name="userPhone" class="layui-input" type="text" autocomplete="off" maxlength="13">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">币种(勿修改)</label>
+                        <div class="layui-input-block">
+                            <input id="currency" name="currency" class="layui-input" type="text" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邮箱号</label>
+                        <div class="layui-input-block">
+                            <input id="userEmail" name="userEmail" class="layui-input" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">地址</label>
+                        <div class="layui-input-block">
+                            <input id="userAddr" name="userAddr" class="layui-input" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button id="submitBtn" name="submitBtn" class="layui-btn layui-btn-danger" type="button">立即提交</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

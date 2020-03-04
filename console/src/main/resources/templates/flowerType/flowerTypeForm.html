@@ -1,0 +1,52 @@
+<#include "../_layout.html">
+<@layout>
+<script type="text/javascript">
+    $(function () {
+        layui.use(['layer', 'form'], function(){
+            var layer = layui.layer
+                ,form = layui.form;
+        });
+
+        $("#submitBtn").click(function(){
+            var flowerName = $("#flowerName").val();
+            var typeName = $("#typeName").val();
+
+            $.ajax({
+                url: '${ctx}/flowerType/add',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    flowerName: flowerName,
+                    typeName: typeName
+                },
+                success: function(result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+    });
+</script>
+<body>
+<div class="center layui-form" style="margin-top: 20px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">花名</label>
+        <div class="layui-input-block">
+            <input type="text" id="flowerName" name="flowerName" value="" placeholder="请输入种类名" autocomplete="off" class="layui-input" style="width:100px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">种类名</label>
+        <div class="layui-input-block">
+            <input type="text" id="typeName" name="typeName" value="" placeholder="请输入种类名" autocomplete="off" class="layui-input" style="width:100px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="submitBtn" name="submitBtn" lay-submit>立即提交</button>
+        </div>
+    </div>
+</div>
+</body>
+</@layout>

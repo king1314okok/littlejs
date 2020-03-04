@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.web.dao.TblSysCodeMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.web.model.TblSysCode">
+        <result column="TYPE" jdbcType="VARCHAR" property="type"/>
+        <result column="CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="TYPE_CN" jdbcType="VARCHAR" property="typeCn"/>
+        <result column="TYPE_EN" jdbcType="VARCHAR" property="typeEn"/>
+        <result column="DISPLAY1" jdbcType="VARCHAR" property="display1"/>
+        <result column="DISPLAY2" jdbcType="VARCHAR" property="display2"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="SHOW_ID" jdbcType="VARCHAR" property="showId"/>
+        <result column="RESERVED1" jdbcType="VARCHAR" property="reserved1"/>
+        <result column="RESERVED2" jdbcType="VARCHAR" property="reserved2"/>
+    </resultMap>
+
+    <sql id="Union_Column_List">
+        t1.TYPE, t1.CODE, t1.TYPE_CN, t1.TYPE_EN, t1.DISPLAY1, t1.DISPLAY2, t1.STATUS, t1.SHOW_ID,
+        t1.RESERVED1, t1.RESERVED2
+    </sql>
+
+    <insert id="insert" parameterType="com.oudake.web.model.TblSysCode">
+    insert into TBL_SYS_CODE (TYPE, CODE, TYPE_CN, 
+      TYPE_EN, DISPLAY1, DISPLAY2, 
+      STATUS, SHOW_ID, RESERVED1, 
+      RESERVED2)
+    values (#{type,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{typeCn,jdbcType=VARCHAR}, 
+      #{typeEn,jdbcType=VARCHAR}, #{display1,jdbcType=VARCHAR}, #{display2,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{showId,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, 
+      #{reserved2,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.oudake.web.model.TblSysCode">
+        insert into TBL_SYS_CODE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="code != null">
+                CODE,
+            </if>
+            <if test="typeCn != null">
+                TYPE_CN,
+            </if>
+            <if test="typeEn != null">
+                TYPE_EN,
+            </if>
+            <if test="display1 != null">
+                DISPLAY1,
+            </if>
+            <if test="display2 != null">
+                DISPLAY2,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="showId != null">
+                SHOW_ID,
+            </if>
+            <if test="reserved1 != null">
+                RESERVED1,
+            </if>
+            <if test="reserved2 != null">
+                RESERVED2,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="typeCn != null">
+                #{typeCn,jdbcType=VARCHAR},
+            </if>
+            <if test="typeEn != null">
+                #{typeEn,jdbcType=VARCHAR},
+            </if>
+            <if test="display1 != null">
+                #{display1,jdbcType=VARCHAR},
+            </if>
+            <if test="display2 != null">
+                #{display2,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="showId != null">
+                #{showId,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved1 != null">
+                #{reserved1,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved2 != null">
+                #{reserved2,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findSysCodeByTypeAndName" resultMap="BaseResultMap" resultType="com.oudake.web.model.TblSysCode">
+        select
+        <include refid="Union_Column_List"/>
+        from
+        TBL_SYS_CODE t1
+        where 1 = 1
+        <if test="type != null and type != ''">
+            and t1.TYPE = #{type}
+        </if>
+        <if test="code != null and code != ''">
+            and t1.CODE = #{code}
+        </if>
+    </select>
+</mapper>

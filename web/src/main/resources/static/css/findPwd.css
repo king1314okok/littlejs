@@ -1,0 +1,52 @@
+/*-忘记密码页面-*/
+.resetpwd {
+    position: relative;
+    width: 386px;
+    height: 370px;
+    padding: 38px 24px 0;
+    left: 50%;
+    margin-left: -193px;
+}
+
+.resetpwd .content-row {
+    border: 1px solid #eaeaea;
+    width: 384px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.resetpwd .content-row span {
+    padding-left: 20px;
+    line-height: 50px;
+    width: 70px;
+}
+
+.resetpwd .content-row input {
+    width: 143px;
+    height: 35px;
+    margin-top: 5px;
+}
+
+.resetpwd .content-row img {
+    height: 50px;
+    cursor: pointer;
+    width: 140px;
+}
+
+.resetpwd .prompt {
+    width: 384px;
+    margin-top: 10px;
+    color: #999;
+    font-size: 14px;
+}
+
+.resetpwd button {
+    margin-top: 15px;
+    width: 384px;
+    height: 52px;
+    color: #fff;
+    background-color: #e94b33;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}

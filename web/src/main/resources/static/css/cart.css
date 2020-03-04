@@ -1,0 +1,85 @@
+.cart-main {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+}
+
+.cart-main .cart-title {
+    height: 50px;
+    padding: 15px 0;
+    border: solid #F7F7F7;
+    border-width: 1px 0 0;
+}
+
+.cart-title h3 {
+    font: lighter 24px/30px arial,"microsoft yahei";
+    color: #555;
+}
+
+.cart-title h5 {
+    font: 12px/20px arial,"microsoft yahei";
+    color: #AAA;
+}
+
+.cart-main .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 2px 1px;
+    border-color: #AAA #DDD;
+}
+
+.cart-table th {
+    line-height: 20px;
+    color: #666;
+    background-color: #F9F9F9;
+    text-align: center;
+    height: 20px;
+    padding: 8px 0;
+    border-bottom: solid 1px #DDD;
+}
+
+.shop-list {
+    background-color: #FFFDEE;
+}
+
+.shop-list td {
+    height: 60px;
+}
+
+.shop-list .good {
+    height: 60px;
+    margin-left: 20px;
+}
+
+.good .pic {
+    float: left;
+}
+
+.good .name {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.pic img {
+    height: 50px;
+    width: 50px;
+}
+
+.all-account {
+    text-align: center;
+    margin-top: 30px;
+    font: normal 16px/32px "microsoft yahei", Arial;
+}
+
+.all-account em {
+    font-size: 22px;
+    color: #D93600;
+    margin: 0 5px;
+}
+
+.nextBtn {
+    float: right;
+    margin-right: 180px;
+}

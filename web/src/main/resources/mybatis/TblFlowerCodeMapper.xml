@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.web.dao.TblFlowerCodeMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.web.model.TblFlowerCode">
+        <result column="TYPE_ID" jdbcType="INTEGER" property="typeId"/>
+        <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName"/>
+        <result column="FATHER_NAME" jdbcType="VARCHAR" property="fatherName"/>
+        <result column="SORT" jdbcType="VARCHAR" property="sort"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.oudake.web.model.TblFlowerCode">
+    insert into TBL_FLOWER_CODE (TYPE_ID, TYPE_NAME, FATHER_NAME, 
+      SORT)
+    values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{fatherName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.oudake.web.model.TblFlowerCode">
+        insert into TBL_FLOWER_CODE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                TYPE_ID,
+            </if>
+            <if test="typeName != null">
+                TYPE_NAME,
+            </if>
+            <if test="fatherName != null">
+                FATHER_NAME,
+            </if>
+            <if test="sort != null">
+                SORT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="fatherName != null">
+                #{fatherName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <sql id="Union_Column_List">
+        t1.TYPE_ID, t1.TYPE_NAME, t1.FATHER_NAME, t1.SORT
+    </sql>
+
+    <select id="findSearchCodes" resultMap="BaseResultMap" resultType="com.oudake.web.model.TblFlowerCode">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER_CODE t1
+        where
+        t1.FATHER_NAME in ('用途', '花材', '价格', '对象', '节日', '枝数', '类型', '颜色')
+    </select>
+</mapper>

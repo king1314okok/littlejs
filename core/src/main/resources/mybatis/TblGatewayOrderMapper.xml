@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.core.dao.TblGatewayOrderMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.core.model.TblGatewayOrder">
+        <result column="GATEWAY_ORD_ID" jdbcType="INTEGER" property="gatewayOrdId"/>
+        <result column="GATEWAY_SYS_TIME" jdbcType="VARCHAR" property="gatewaySysTime"/>
+        <result column="TXN_TYPE" jdbcType="VARCHAR" property="txnType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="CURRENCY" jdbcType="VARCHAR" property="currency"/>
+        <result column="TXN_AMT" jdbcType="DECIMAL" property="txnAmt"/>
+        <result column="TXN_REMARK" jdbcType="VARCHAR" property="txnRemark"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="RESERVED1" jdbcType="VARCHAR" property="reserved1"/>
+        <result column="RESERVED2" jdbcType="VARCHAR" property="reserved2"/>
+        <result column="RESERVED3" jdbcType="VARCHAR" property="reserved3"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.oudake.core.model.TblGatewayOrder">
+    insert into TBL_GATEWAY_ORDER (GATEWAY_ORD_ID, GATEWAY_SYS_TIME, TXN_TYPE, 
+      USER_ID, CURRENCY, TXN_AMT, 
+      TXN_REMARK, STATUS, RESERVED1, 
+      RESERVED2, RESERVED3)
+    values (#{gatewayOrdId,jdbcType=INTEGER}, #{gatewaySysTime,jdbcType=VARCHAR}, #{txnType,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{currency,jdbcType=VARCHAR}, #{txnAmt,jdbcType=DECIMAL}, 
+      #{txnRemark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, 
+      #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.oudake.core.model.TblGatewayOrder">
+        insert into TBL_GATEWAY_ORDER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gatewayOrdId != null">
+                GATEWAY_ORD_ID,
+            </if>
+            <if test="gatewaySysTime != null">
+                GATEWAY_SYS_TIME,
+            </if>
+            <if test="txnType != null">
+                TXN_TYPE,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="currency != null">
+                CURRENCY,
+            </if>
+            <if test="txnAmt != null">
+                TXN_AMT,
+            </if>
+            <if test="txnRemark != null">
+                TXN_REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="reserved1 != null">
+                RESERVED1,
+            </if>
+            <if test="reserved2 != null">
+                RESERVED2,
+            </if>
+            <if test="reserved3 != null">
+                RESERVED3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gatewayOrdId != null">
+                #{gatewayOrdId,jdbcType=INTEGER},
+            </if>
+            <if test="gatewaySysTime != null">
+                #{gatewaySysTime,jdbcType=VARCHAR},
+            </if>
+            <if test="txnType != null">
+                #{txnType,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="txnAmt != null">
+                #{txnAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="txnRemark != null">
+                #{txnRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved1 != null">
+                #{reserved1,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved2 != null">
+                #{reserved2,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved3 != null">
+                #{reserved3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findById" resultMap="BaseResultMap" resultType="com.oudake.core.model.TblGatewayOrder">
+        select
+        *
+        from
+        TBL_GATEWAY_ORDER t1
+        where 1 = 1
+        <if test="gatewayOrdId != null and gatewayOrdId > 0">
+            and t1.GATEWAY_ORD_ID = #{gatewayOrdId}
+        </if>
+    </select>
+</mapper>

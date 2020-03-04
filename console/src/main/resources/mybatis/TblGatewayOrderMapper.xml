@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.console.dao.TblGatewayOrderMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.console.model.TblGatewayOrder">
+        <result column="GATEWAY_ORD_ID" jdbcType="INTEGER" property="gatewayOrdId"/>
+        <result column="GATEWAY_SYS_TIME" jdbcType="VARCHAR" property="gatewaySysTime"/>
+        <result column="TXN_TYPE" jdbcType="VARCHAR" property="txnType"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="CURRENCY" jdbcType="VARCHAR" property="currency"/>
+        <result column="TXN_AMT" jdbcType="DECIMAL" property="txnAmt"/>
+        <result column="TXN_REMARK" jdbcType="VARCHAR" property="txnRemark"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="RESERVED1" jdbcType="VARCHAR" property="reserved1"/>
+        <result column="RESERVED2" jdbcType="VARCHAR" property="reserved2"/>
+        <result column="RESERVED3" jdbcType="VARCHAR" property="reserved3"/>
+    </resultMap>
+
+    <resultMap id="UnionResultMap" type="com.oudake.console.model.TblGatewayOrder" extends="BaseResultMap">
+        <result column="USER_ADDR" property="userAddr" jdbcType="VARCHAR"/>
+        <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="REAL_NAME" property="realName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Union_Column_List">
+        t1.GATEWAY_ORD_ID, t1.GATEWAY_SYS_TIME, t1.TXN_TYPE, t1.USER_ID, t1.CURRENCY, t1.TXN_AMT,
+        t1.TXN_REMARK, t1.STATUS, t1.RESERVED1, t1.RESERVED2, t1.RESERVED3, t2.USER_ADDR, t2.USER_PHONE, t2.REAL_NAME
+    </sql>
+
+    <insert id="insert" parameterType="com.oudake.console.model.TblGatewayOrder">
+        insert into TBL_GATEWAY_ORDER (GATEWAY_ORD_ID, GATEWAY_SYS_TIME, TXN_TYPE,
+                                       USER_ID, CURRENCY, TXN_AMT,
+                                       TXN_REMARK, STATUS, RESERVED1,
+                                       RESERVED2, RESERVED3)
+        values (#{gatewayOrdId,jdbcType=INTEGER}, #{gatewaySysTime,jdbcType=VARCHAR}, #{txnType,jdbcType=VARCHAR},
+                #{userId,jdbcType=INTEGER}, #{currency,jdbcType=VARCHAR}, #{txnAmt,jdbcType=DECIMAL},
+                #{txnRemark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR},
+                #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.oudake.console.model.TblGatewayOrder">
+        insert into TBL_GATEWAY_ORDER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gatewayOrdId != null">
+                GATEWAY_ORD_ID,
+            </if>
+            <if test="gatewaySysTime != null">
+                GATEWAY_SYS_TIME,
+            </if>
+            <if test="txnType != null">
+                TXN_TYPE,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="currency != null">
+                CURRENCY,
+            </if>
+            <if test="txnAmt != null">
+                TXN_AMT,
+            </if>
+            <if test="txnRemark != null">
+                TXN_REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="reserved1 != null">
+                RESERVED1,
+            </if>
+            <if test="reserved2 != null">
+                RESERVED2,
+            </if>
+            <if test="reserved3 != null">
+                RESERVED3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gatewayOrdId != null">
+                #{gatewayOrdId,jdbcType=INTEGER},
+            </if>
+            <if test="gatewaySysTime != null">
+                #{gatewaySysTime,jdbcType=VARCHAR},
+            </if>
+            <if test="txnType != null">
+                #{txnType,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="txnAmt != null">
+                #{txnAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="txnRemark != null">
+                #{txnRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved1 != null">
+                #{reserved1,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved2 != null">
+                #{reserved2,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved3 != null">
+                #{reserved3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findOrdByPage_Time_TxnType" resultMap="UnionResultMap" resultType="com.oudake.console.model.TblGatewayOrder">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_GATEWAY_ORDER t1
+        left join TBL_USER_INFO t2
+        on t1.USER_ID = t2.USER_ID
+        where 1 = 1
+        <if test="startTime != null and startTime != ''">
+            and t1.GATEWAY_SYS_TIME &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and t1.GATEWAY_SYS_TIME &lt;= #{endTime}
+        </if>
+        <if test="txnType != null and txnType != ''">
+            and t1.TXN_TYPE = #{txnType}
+        </if>
+        order by t1.GATEWAY_ORD_ID asc
+    </select>
+
+    <select id="findOrdById" resultMap="UnionResultMap" resultType="com.oudake.console.model.TblGatewayOrder">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_GATEWAY_ORDER t1
+        left join TBL_USER_INFO t2
+        on t1.USER_ID = t2.USER_ID
+        where 1 = 1
+        <if test="gatewayOrdId != null and gatewayOrdId != ''">
+            and t1.GATEWAY_ORD_ID = #{gatewayOrdId}
+        </if>
+    </select>
+
+    <select id="findOrdByDate" resultMap="UnionResultMap" resultType="com.oudake.console.model.TblGatewayOrder">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_GATEWAY_ORDER t1
+        left join TBL_USER_INFO t2
+        on t1.USER_ID = t2.USER_ID
+        where 1 = 1
+        <if test="date != null and date != ''">
+            and t1.GATEWAY_SYS_TIME like CONCAT(#{date}, '%')
+        </if>
+    </select>
+
+    <select id="getAllOrderAmount" resultType="Integer">
+        select
+        count(0)
+        from TBL_GATEWAY_ORDER
+    </select>
+
+    <select id="getAllMoney" resultType="java.math.BigDecimal">
+        select
+        sum(t1.TXN_AMT)
+        from TBL_GATEWAY_ORDER t1
+    </select>
+</mapper>

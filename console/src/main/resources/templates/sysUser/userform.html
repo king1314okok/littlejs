@@ -1,0 +1,114 @@
+<#include "../_layout.html">
+<@layout>
+    <head>
+        <title>用户信息</title>
+    </head>
+    <body>
+
+    <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin"
+         style="padding: 20px 0 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" value="${sysUser.username}" disabled="disabled" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" id="realName" name="realName" lay-verify="required" value="${sysUser.realName}"
+                       placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userType" name="userType"
+                       value="<#if sysUser.userType == "00">管理员<#else>普通用户</#if>" disabled="disabled"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构号</label>
+            <div class="layui-input-inline">
+                <input type="text" id="orgCode" name="orgCode" value="${sysUser.orgCode}" disabled="disabled"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户ID</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userId" name="userId" value="${sysUser.userId}" disabled="disabled"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="text" id="status" name="status" value="<#if sysUser.status == "00">正常<#else>异常</#if>"
+                       disabled="disabled" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userPhone" name="userPhone" lay-verify="phone" placeholder="请输入手机号" value="${sysUser.userPhone}"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userEmail" name="userEmail" lay-verify="email" value="${sysUser.userEmail}"
+                       placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userAddr" name="userAddr" value="${sysUser.userAddr}" placeholder="请输入地址"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" style="margin-left: 100px" onclick="updateSysUserInfo()">立即提交</button>
+        </div>
+    </div>
+
+    <script src="/static/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/static/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form', 'layer'], function () {
+            var $ = layui.$
+                , form = layui.form
+                , layer = layui.layer;
+        });
+
+        function updateSysUserInfo() {
+            var userId = '${sysUser.userId}';
+            var realName = $('#realName').val();
+            var userPhone = $('#userPhone').val();
+            var userEmail = $('#userEmail').val();
+            var userAddr = $('#userAddr').val();
+            $.ajax({
+                url: '/sysUser/updateSysUserInfo',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    userId: userId,
+                    realName: realName,
+                    userPhone: userPhone,
+                    userEmail: userEmail,
+                    userAddr: userAddr
+                },
+                success: function (result) {
+                    layer.msg(result.msg);
+                }
+            })
+        }
+    </script>
+    </body>
+</@layout>

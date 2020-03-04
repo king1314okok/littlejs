@@ -1,0 +1,32 @@
+<#assign ctx=request.getContextPath()>
+<#macro layout title="花市网" version = "1.0">
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link href="${ctx}/static/css/base.css" rel="stylesheet" type="text/css">
+    <link href="${ctx}/static/css/home_header.css" rel="stylesheet" type="text/css">
+    <link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/common/jquery.js"></script>
+    <script src="${ctx}/static/js/common/jquery-ui/jquery.ui.js"></script>
+    <script src="${ctx}/static/js/common.js"></script>
+    <script src="${ctx}/static/js/common/jquery.validation.min.js"></script>
+    <script src="${ctx}/static/js/header.js" charset="utf-8"></script>
+    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/js/util.js"></script>
+
+</head>
+<body>
+<#include "ftl/header.ftl">
+    <#nested>
+    <#include "ftl/footer.ftl">
+</body>
+</html>
+</#macro>

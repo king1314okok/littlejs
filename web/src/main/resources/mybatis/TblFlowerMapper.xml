@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.web.dao.TblFlowerMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.web.model.TblFlower">
+        <result column="FLOWER_ID" jdbcType="INTEGER" property="flowerId"/>
+        <result column="FLOWER_NAME" jdbcType="VARCHAR" property="flowerName"/>
+        <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode"/>
+        <result column="PICTURE_URL" jdbcType="VARCHAR" property="pictureUrl"/>
+        <result column="PRICE" jdbcType="DECIMAL" property="price"/>
+        <result column="DISCOUNT" jdbcType="REAL" property="discount"/>
+        <result column="STOCK" jdbcType="INTEGER" property="stock"/>
+        <result column="FLOWER_STATUS" jdbcType="VARCHAR" property="flowerStatus"/>
+        <result column="MATERIAL" jdbcType="VARCHAR" property="material"/>
+        <result column="PACK_WAY" jdbcType="VARCHAR" property="packWay"/>
+        <result column="MEANING" jdbcType="VARCHAR" property="meaning"/>
+        <result column="ADDITION" jdbcType="VARCHAR" property="addition"/>
+        <result column="SEND_WAY" jdbcType="VARCHAR" property="sendWay"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="RESERVED1" jdbcType="VARCHAR" property="reserved1"/>
+        <result column="RESERVED2" jdbcType="VARCHAR" property="reserved2"/>
+        <result column="RESERVED3" jdbcType="VARCHAR" property="reserved3"/>
+    </resultMap>
+
+    <resultMap id="UnionResultMap" type="com.oudake.web.model.TblFlower" extends="BaseResultMap">
+        <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR"/>
+        <result column="FATHER_NAME" property="fatherName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Union_Column_List">
+        t1.FLOWER_ID, t1.FLOWER_NAME, t1.ORG_CODE, t1.PICTURE_URL, t1.PRICE, t1.DISCOUNT, t1.STOCK, t1.FLOWER_STATUS,
+        t1.MATERIAL, t1.PACK_WAY, t1.MEANING, t1.ADDITION, t1.SEND_WAY, t1.DESCRIPTION, t1.RESERVED1, t1.RESERVED2, t1.RESERVED3,
+        t3.TYPE_NAME, t3.FATHER_NAME
+    </sql>
+
+    <insert id="insert" parameterType="com.oudake.web.model.TblFlower">
+        insert into TBL_FLOWER (FLOWER_ID, FLOWER_NAME, ORG_CODE,
+                                PICTURE_URL, PRICE, DISCOUNT,
+                                STOCK, FLOWER_STATUS, MATERIAL,
+                                PACK_WAY, MEANING, ADDITION,
+                                SEND_WAY, DESCRIPTION, RESERVED1,
+                                RESERVED2, RESERVED3)
+        values (#{flowerId,jdbcType=INTEGER}, #{flowerName,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR},
+                #{pictureUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{discount,jdbcType=REAL},
+                #{stock,jdbcType=INTEGER}, #{flowerStatus,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR},
+                #{packWay,jdbcType=VARCHAR}, #{meaning,jdbcType=VARCHAR}, #{addition,jdbcType=VARCHAR},
+                #{sendWay,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR},
+                #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.oudake.web.model.TblFlower">
+        insert into TBL_FLOWER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                FLOWER_ID,
+            </if>
+            <if test="flowerName != null">
+                FLOWER_NAME,
+            </if>
+            <if test="orgCode != null">
+                ORG_CODE,
+            </if>
+            <if test="pictureUrl != null">
+                PICTURE_URL,
+            </if>
+            <if test="price != null">
+                PRICE,
+            </if>
+            <if test="discount != null">
+                DISCOUNT,
+            </if>
+            <if test="stock != null">
+                STOCK,
+            </if>
+            <if test="flowerStatus != null">
+                FLOWER_STATUS,
+            </if>
+            <if test="material != null">
+                MATERIAL,
+            </if>
+            <if test="packWay != null">
+                PACK_WAY,
+            </if>
+            <if test="meaning != null">
+                MEANING,
+            </if>
+            <if test="addition != null">
+                ADDITION,
+            </if>
+            <if test="sendWay != null">
+                SEND_WAY,
+            </if>
+            <if test="description != null">
+                DESCRIPTION,
+            </if>
+            <if test="reserved1 != null">
+                RESERVED1,
+            </if>
+            <if test="reserved2 != null">
+                RESERVED2,
+            </if>
+            <if test="reserved3 != null">
+                RESERVED3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                #{flowerId,jdbcType=INTEGER},
+            </if>
+            <if test="flowerName != null">
+                #{flowerName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCode != null">
+                #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="pictureUrl != null">
+                #{pictureUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=REAL},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="flowerStatus != null">
+                #{flowerStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="packWay != null">
+                #{packWay,jdbcType=VARCHAR},
+            </if>
+            <if test="meaning != null">
+                #{meaning,jdbcType=VARCHAR},
+            </if>
+            <if test="addition != null">
+                #{addition,jdbcType=VARCHAR},
+            </if>
+            <if test="sendWay != null">
+                #{sendWay,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved1 != null">
+                #{reserved1,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved2 != null">
+                #{reserved2,jdbcType=VARCHAR},
+            </if>
+            <if test="reserved3 != null">
+                #{reserved3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--去重-->
+    <select id="findByFlowerName" resultMap="UnionResultMap" resultType="com.oudake.web.model.TblFlower">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER t1
+        left join TBL_FLOWER_TYPE t2
+        on t1.FLOWER_ID = t2.FLOWER_ID
+        left join TBL_FLOWER_CODE t3
+        on t2.TYPE_NAME = t3.TYPE_NAME
+        where 1 = 1
+        <if test="flowerName != null and flowerName != ''">
+            and t1.FLOWER_NAME like CONCAT('%', #{flowerName}, '%')
+        </if>
+        group by t1.FLOWER_ID
+        order by t1.FLOWER_ID asc
+    </select>
+
+    <!--去重-->
+    <select id="findByTypeName" resultMap="UnionResultMap" resultType="com.oudake.web.model.TblFlower">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER t1
+        left join TBL_FLOWER_TYPE t2
+        on t1.FLOWER_ID = t2.FLOWER_ID
+        left join TBL_FLOWER_CODE t3
+        on t2.TYPE_NAME = t3.TYPE_NAME
+        where 1 = 1
+        <if test="typeName != null and typeName != ''">
+            and (
+            t3.TYPE_NAME like CONCAT('%', #{typeName}, '%')
+            or t3.FATHER_NAME like CONCAT('%', #{typeName}, '%')
+            )
+        </if>
+        group by t1.FLOWER_ID
+        order by t1.FLOWER_ID asc
+    </select>
+
+    <select id="findIndexFlower" resultMap="UnionResultMap" resultType="com.oudake.web.model.TblFlower">
+        select distinct
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER t1
+        left join TBL_FLOWER_TYPE t2
+        on t1.FLOWER_ID = t2.FLOWER_ID
+        left join TBL_FLOWER_CODE t3
+        on t2.TYPE_NAME = t3.TYPE_NAME
+        where
+              t3.TYPE_NAME = '特价促销'
+           or t3.TYPE_NAME = '新品上架'
+           or t3.TYPE_NAME = '热卖商品'
+           or t3.TYPE_NAME = '热评商品'
+           or t3.TYPE_NAME = '猜您喜欢'
+           or t3.TYPE_NAME = '开业花篮'
+        group by
+        t1.FLOWER_NAME
+        order by t1.FLOWER_ID asc
+    </select>
+</mapper>

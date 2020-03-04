@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.web.dao.TblFlowerStatusMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.web.model.TblFlowerStatus">
+        <result column="FLOWER_ID" jdbcType="INTEGER" property="flowerId"/>
+        <result column="TYPE" jdbcType="VARCHAR" property="type"/>
+        <result column="AMOUNT" jdbcType="INTEGER" property="amount"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.oudake.web.model.TblFlowerStatus">
+    insert into TBL_FLOWER_STATUS (FLOWER_ID, TYPE, AMOUNT
+      )
+    values (#{flowerId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{amount,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.oudake.web.model.TblFlowerStatus">
+        insert into TBL_FLOWER_STATUS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                FLOWER_ID,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="amount != null">
+                AMOUNT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                #{flowerId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <sql id="Union_Column_List">
+        t1.FLOWER_ID, t1.TYPE, t1.AMOUNT
+    </sql>
+
+    <select id="findByIdAndType" resultType="com.oudake.web.model.TblFlowerStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER_STATUS t1
+        where 1 = 1
+        <if test="flowerId != null">
+            and t1.FLOWER_ID = #{flowerId}
+        </if>
+        <if test="type != null and type != ''">
+            and t1.TYPE = #{type}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+<#include "../_layout.html">
+<@layout>
+<script type="text/javascript"?>
+    $(function () {
+        layui.use(['layer', 'form'], function(){
+            var layer = layui.layer
+                ,form = layui.form;
+
+            $.ajax({
+                url: '${ctx}/sysCode/findSysCodeByType',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    type: 'TXN_STATUS'
+                },
+                success: function (data) {
+                    $('#txnStatus').append(new Option());
+                    $.each(data, function (index, item) {
+                        $('#txnStatus').append(new Option(item.typeCn, item.display1));// 下拉菜单里添加元素
+                    });
+                    form.render();
+                }
+            });
+        });
+
+
+        $("#submitBtn").click(function(){
+            var txnStatus = $("#txnStatus").val();
+
+            $.ajax({
+                url: '${ctx}/gatewayOrder/processOrder',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    gatewayOrdId: '${(order.gatewayOrdId)!""}',
+                    txnStatus: txnStatus
+                },
+                success: function(result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+    })
+</script>
+<div class="layui-form" style="margin-top: 20px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">处理类型</label>
+        <div class="layui-input-block" style="width: 150px">
+            <select id="txnStatus" name="txnStatus"></select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 160px">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="submitBtn" name="submitBtn" lay-submit>立即提交</button>
+        </div>
+    </div>
+</div>
+</@layout>

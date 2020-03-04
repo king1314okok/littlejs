@@ -1,0 +1,84 @@
+<#assign ctx = request.getContextPath()>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登录</title>
+	<link href="${ctx}/static/css/login.css" rel="stylesheet" charset="utf-8" >
+	<link href="${ctx}/static/css/reset.css" rel="stylesheet" charset="utf-8" >
+	<link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+	<link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+	<script src="${ctx}/static/js/common/jquery.js"></script>
+	<script src="${ctx}/static/layui/layui.js"></script>
+	<script src="${ctx}/static/js/util.js"></script>
+
+	<script type="text/javascript">
+
+		function doLogin() {
+			var username = $("#username").val();
+			var password = $("#password").val();
+			$.ajax({
+				url: "${ctx}/doLogin",
+				type: "post",
+				dataType: "json",
+				data: {
+					username: username,
+					password: password
+				},
+				success: function (result) {
+					if (!result.success) {
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							layer.msg(result.msg);
+						});
+					} else {
+						window.location.href = "/";
+					}
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+<div class="login_content clearfix">
+	<form>
+		<div class="login_box myfr">
+			<p class="tabchange clearfix">
+				<span class="myfl sign_select" id="usertype">用户登录</span>
+			</p>
+			<p class="system_error"></p>
+			<input id="username" name="username" type="text" placeholder="用户名" />
+			<p class="username_error"><span>用户名不能为空!</span></p>
+			<input id="password" name="password" maxlength="16" type="password" placeholder="登录密码"/>
+			<p class="password_error"><span>密码不能为空!</span></p>
+			<p class="forget_password clearfix"><a href="${ctx}/findPwd" class="myfr">忘记密码？</a></p>
+			<input type="button" onclick="doLogin()	" value="立即登录" class="submit_btn">
+			<p class="entry_mode clearfix">
+				<span class="myfl">你也可以用以下方式注册:</span>
+				<a href="${ctx}/register" class="myfr" style="margin-left: 50px"><em></em><i>快速注册</i></a>
+			</p>
+		</div>
+	</form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

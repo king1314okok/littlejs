@@ -1,0 +1,202 @@
+<#include "../_layout.html">
+<@layout>
+<head>
+    <title>花卉</title>
+</head>
+<script type="text/javascript">
+
+    $(function () {
+        layui.use(['form', 'layer', 'table'], function () {
+            var table = layui.table
+                , layer = layui.layer;
+
+            table.render({
+                id: 'dataGrid'
+                , elem: '#dataGrid'
+                , url: '${ctx}/flower/dataGrid'
+                , toolbar: '#toolbar'
+                , height: 'full-200'
+                , cellMinWidth: 80
+                , cols: [[
+                    {type:'radio'}
+                    , {field: 'flowerId', title: '商品名', width: 100, sort: true}
+                    , {field: 'flowerName', title: '商品名', width: 200, sort: true}
+                    , {field: 'price', title: '价格', width: 100}
+                    , {field: 'discount', title: '折扣', width: 100}
+                    , {field: 'stock', title: '库存量', width: 100}
+                    , {field: 'flowerStatus', title: '状态', width: 100}
+                    , {field: 'typeName', title: '种类名', width: 100}
+                    , {field: 'fatherName', title: '上级类名', width: 100}
+                ]]
+                , page: {
+                    layout: ['limit', 'count', 'prev', 'page', 'next']
+                    , groups: 1
+                }
+                , request: {
+                    pageName: 'currPage' //页码的参数名称，默认：page
+                    ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                }
+                , response: {
+                    code: 'result' //数据状态的字段名称，默认：code
+                    , count: 'totalCount' //数据总数的字段名称，默认：count
+                }
+                , method:'POST'
+                , loading: true
+                , limit: 10
+                , done: function (res) {
+                    $.ajax({
+                        url: '${ctx}/sysCode/findSysCodeByTypeAndCode',
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {
+                            type: 'FLOWER_STATUS',
+                            code: 'NORMAL'
+                        },
+                        success: function (result) {
+                            $("[data-field='flowerStatus']").children().each(function(){
+                                if($(this).text() === result.obj){
+                                    $(this).text("启用")
+                                } else {
+                                    $(this).text("停用")
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+
+            table.on('toolbar(dataGrid)', function(obj){
+                var flowerName = $("#flowerName").val();
+                var typeName = $("#typeName").val();
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'add':
+                        layer.open({
+                            title: "添加"
+                            ,type: 2
+                            ,icon: 1
+                            ,content: '${ctx}/flower/form?type=add'
+                            ,area: ['900px', '510px']
+                            ,btn: ['关闭']
+                            ,yes: function(index, layero){
+                                table.reload('dataGrid', {
+                                    where: {
+                                        'flowerName': flowerName,
+                                        'typeName': typeName
+                                    }
+                                });
+                                layer.close(index);
+                            }
+                        });
+                        break;
+                    case 'del':
+                        var data = checkStatus.data;
+                        if (data.length === 0) {
+                            layer.msg("请选中一条记录");
+                            return;
+                        }
+                        layer.msg('确定删除？', {
+                            time: 0
+                            ,btn: ['确定', '取消']
+                            ,yes: function(index){
+                                layer.close(index);
+                                $.ajax({
+                                    url: '${ctx}/flower/del',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: {
+                                        flowerId: data[0].flowerId,
+                                    },
+                                    success: function (result) {
+                                        layer.msg(result.msg);
+                                        table.reload('dataGrid', {
+                                            where: {
+                                                'flowerName': flowerName,
+                                                'typeName': typeName
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+                    case 'edit':
+                        var data = checkStatus.data;
+                        if (data.length === 0) {
+                            layer.msg("请选中一条记录");
+                            return;
+                        }
+                        layer.open({
+                            title: "编辑"
+                            ,type: 2
+                            ,icon: 1
+                            ,content: '${ctx}/flower/form?type=edit&flowerId='+data[0].flowerId
+                            ,area: ['900px', '500px']
+                            ,btn: ['关闭']
+                            ,yes: function(index, layero){
+                                table.reload('dataGrid', {
+                                    where: {
+                                        'flowerName': flowerName,
+                                        'typeName': typeName
+                                    }
+                                });
+                                layer.close(index);
+                            }
+                        });
+                        break;
+                    case 'query':
+                        table.reload('dataGrid', {
+                            where: {
+                                'flowerName': flowerName,
+                                'typeName': typeName
+                            }
+                        });
+                        break;
+                }
+            });
+
+        });
+    })
+</script>
+<body>
+<#--操作按钮-->
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="del">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="edit">修改</button>
+        <button class="layui-btn layui-btn-sm" lay-event="query">查询</button>
+    </div>
+</script>
+<div class="layui-form" style="margin-top: 25px">
+    <table>
+        <tr>
+            <td>
+                <#--花名flowerName-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">花名:</label>
+                    <div class="layui-input-block">
+                        <input id="flowerName" name="flowerName" type="text" placeholder="请输入花名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <#--种类名typeName-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">种类名:</label>
+                    <div class="layui-input-block">
+                        <input id="typeName" name="typeName" type="text" placeholder="请输入种类名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<#--查询结果-->
+<div style="padding: 15px;">
+    <table class="layui-hide" id="dataGrid" lay-filter="dataGrid"></table>
+</div>
+</body>
+</@layout>

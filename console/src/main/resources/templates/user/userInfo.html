@@ -1,0 +1,98 @@
+<#include "../_layout.html">
+<@layout>
+<script type="text/javascript">
+    $(function () {
+        layui.use(['layer', 'form'], function(){
+            var layer = layui.layer
+                ,table = layui.form;
+            table.render();
+        });
+
+        <#if errorMsg??>
+            layer.msg("${errorMsg}");
+        </#if>
+    });
+</script>
+<body>
+<div class="center">
+    <table class="layui-table">
+        <colgroup>
+            <col width="100">
+            <col width="100">
+        </colgroup>
+        <tbody>
+            <tr>
+                <td>用户名</td>
+                <td>${(user.username)!""}</td>
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td>
+                <#if user.userStatus?? && user.userStatus == '00'>
+                    正常
+                <#else>
+                    停用
+                </#if>
+                </td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>${(userInfo.realName)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>用户类型</td>
+                <td>
+                <#if (user.userType)?? && user.userType == '00'>
+                    普通用户
+                <#else>
+                    VIP用户
+                </#if>
+                </td>
+            </tr>
+            <tr>
+                <td>用户名ID</td>
+                <td>${(user.userId)!""}</td>
+            </tr>
+            <tr>
+                <td>手机</td>
+                <td>${(user.userPhone)!""}</td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>${(userInfo.userEmail)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>地址</td>
+                <td>${(userInfo.userAddr)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>币种</td>
+                <td>
+                    <#if (userInfo.currency)?? && userInfo.currency == 'CNY'>
+                        人民币
+                    <#else>
+                        暂无
+                    </#if>
+                </td>
+            </tr>
+            <tr>
+                <td>上次登录时间</td>
+                <td>${(userInfo.lastLoginTime)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>上次登录IP</td>
+                <td>${(userInfo.lastLoginIp)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>注册时间</td>
+                <td>${(userInfo.registerTime)!"暂无"}</td>
+            </tr>
+            <tr>
+                <td>注册IP</td>
+                <td>${(userInfo.registerIp)!"暂无"}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</@layout>

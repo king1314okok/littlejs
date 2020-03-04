@@ -1,0 +1,122 @@
+<#include "_layout.html">
+<head>
+    <title>${(flower.flowerName)!"花卉"}</title>
+    <link href="${ctx}/static/css/flower.css" rel="stylesheet" type="text/css">
+    <link href="${ctx}/static/css/cart-num.css" rel="stylesheet" type="text/css">
+</head>
+<@layout>
+<script type="text/javascript">
+
+    $(function(){
+        layui.use('layer', function(){
+            var layer = layui.layer;
+        });
+
+        var num_jia = document.getElementById("num-jia");
+        var num_jian = document.getElementById("num-jian");
+        var input_num = document.getElementById("input-num");
+
+        num_jia.onclick = function() {
+            input_num.value = parseInt(input_num.value) + 1;
+        };
+
+        num_jian.onclick = function() {
+            if(input_num.value <= 0) {
+                input_num.value = 0;
+            } else {
+                input_num.value = parseInt(input_num.value) - 1;
+            }
+        };
+
+        $('#addCartBtn').click(function() {
+            $.ajax({
+                url: '${ctx}/cart/add',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    flowerId: ${flower.flowerId},
+                    amount: input_num.value
+                },
+                success: function (result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+
+        $('#addFavorite').click(function () {
+            $.ajax({
+                url: '${ctx}/favorite/add',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    flowerId: ${flower.flowerId},
+                },
+                success: function (result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+
+        $('#buyBtn').click(function() {
+            $.ajax({
+                url: '${ctx}/gatewayOrder/placeOneOrder',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    flowerId: ${flower.flowerId},
+                    amount: input_num.value
+                },
+                success: function (result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+    })
+</script>
+<body>
+<div class="flower-content">
+    <div class="flower-pic">
+        <img src="${(flower.pictureUrl)!""}" alt="">
+    </div>
+    <div class="flower-detail">
+        <div class="name">
+            <h1>${(flower.flowerName)!""}</h1>
+        </div>
+        <div class="meta">
+            <label>材料：</label>${(flower.material)!"暂无"}<br>
+            <label>包装：</label>${(flower.packWay)!"暂无"}<br>
+            <label>花语：</label>${(flower.meaning)!"暂无"}<br>
+            <label>附送：</label>${(flower.addition)!"暂无"}<br>
+            <label>配送：</label>${(flower.sendWay)!"暂无"}<br>
+            <label>说明：</label>${(flower.description)!"暂无"}<br>
+            <p>&nbsp;&nbsp;&nbsp;市场价：￥${flower.price}</font></p>
+            <p>&nbsp;&nbsp;&nbsp;优惠价：<font style="font-size:16px;color:red;">￥${flower.discount * flower.price}</font></p>
+        </div>
+    </div>
+    <div class="cart">
+        <button id="addFavorite" name="addFavorite" class="layui-btn layui-btn-primary" style="float: left;margin-left: 150px;margin-top: 20px;">收藏商品</button>
+        <div>
+            <ul class="btn-numbox">
+                <li><span style="margin-left: 50px;margin-right: 30px">数量:</span></li>
+                <li>
+                    <ul class="count">
+                        <li><span id="num-jian" class="num-jian">-</span></li>
+                        <li><input type="text" class="input-num" id="input-num" value="1" /></li>
+                        <li><span id="num-jia" class="num-jia">+</span></li>
+                    </ul>
+                </li>
+                <li><span class="kucun">（库存:${(flower.stock)!"0"}）</span></li>
+            </ul>
+        </div>
+        <button id="addCartBtn" name="addCartBtn" type="button" class="layui-btn layui-btn-warm" style="margin-left: 20px">加入购物车</button>
+        <button id="buyBtn" name="butBtn" class="layui-btn layui-btn-danger">立即购买</button>
+    </div>
+</div>
+
+<!-- 横幅 -->
+<div style="text-align: center">
+	<img width="1200" src="http://www.ihuashi.cn/shop/templates/default/images/vcz.jpg" alt="横幅"/>
+</div>
+
+</body>
+</@layout>

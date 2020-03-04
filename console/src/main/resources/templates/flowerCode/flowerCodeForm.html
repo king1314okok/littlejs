@@ -1,0 +1,71 @@
+<#include "../_layout.html">
+<@layout>
+<script type="text/javascript">
+    $(function () {
+        layui.use(['layer', 'form'], function(){
+            var layer = layui.layer
+                ,form = layui.form;
+        });
+
+        $("#submitBtn").click(function(){
+            var url = '';
+            var type = '${(type)!""}';
+            var typeId = '${(flowerCode.typeId)!""}';
+            var typeName = $("#typeName").val();
+            var fatherName = $("#fatherName").val();
+            var sort = $("#sort").val();
+
+            if (type === 'edit') {
+                url = '${ctx}/flowerCode/edit'
+            } else {
+                url = '${ctx}/flowerCode/add'
+            }
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    typeId: typeId,
+                    typeName: typeName,
+                    fatherName: fatherName,
+                    sort: sort
+                },
+                success: function(result) {
+                    layer.msg(result.msg);
+                }
+            })
+        });
+    });
+</script>
+<body>
+<div class="center layui-form" style="margin-top: 20px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">种类名</label>
+        <div class="layui-input-block">
+            <input type="text" id="typeName" name="typeName" value="${(flowerCode.typeName)!""}" required  lay-verify="required" placeholder="请输入种类名" autocomplete="off" class="layui-input" style="width:100px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">父类名</label>
+        <div class="layui-input-block">
+            <input type="text" id="fatherName" name="fatherName" value="${(flowerCode.fatherName)!""}" placeholder="请输入父类名" autocomplete="off" class="layui-input" style="width:100px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="number" id="sort" name="sort" value="${(flowerCode.sort)!""}" autocomplete="off" class="layui-input" style="width:100px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="submitBtn" name="submitBtn" lay-submit>立即提交</button>
+        </div>
+    </div>
+</div>
+</body>
+</@layout>

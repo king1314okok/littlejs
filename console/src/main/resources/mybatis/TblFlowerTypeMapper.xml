@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oudake.console.dao.TblFlowerTypeMapper">
+    <resultMap id="BaseResultMap" type="com.oudake.console.model.TblFlowerType">
+        <result column="FLOWER_ID" jdbcType="INTEGER" property="flowerId"/>
+        <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName"/>
+    </resultMap>
+
+    <resultMap id="UnionResultMap" type="com.oudake.console.model.TblFlowerType" extends="BaseResultMap">
+        <result column="FLOWER_NAME" jdbcType="VARCHAR" property="flowerName"/>
+    </resultMap>
+
+    <sql id="Union_Column_List">
+        t1.FLOWER_ID, t1.TYPE_NAME, t2.FLOWER_NAME
+    </sql>
+
+    <insert id="insert" parameterType="com.oudake.console.model.TblFlowerType">
+        insert into TBL_FLOWER_TYPE (FLOWER_ID, TYPE_NAME)
+        values (#{flowerId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.oudake.console.model.TblFlowerType">
+        insert into TBL_FLOWER_TYPE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                FLOWER_ID,
+            </if>
+            <if test="typeName != null">
+                TYPE_NAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="flowerId != null">
+                #{flowerId,jdbcType=INTEGER},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findByFlowerType" resultMap="UnionResultMap" resultType="com.oudake.console.model.TblFlowerType">
+        select
+        <include refid="Union_Column_List"/>
+        from TBL_FLOWER_TYPE t1
+        left join TBL_FLOWER t2
+        on t1.FLOWER_ID = t2.FLOWER_ID
+        where 1 = 1
+        <if test="flowerType.typeName != null and flowerType.typeName != ''" >
+            and t1.TYPE_NAME like CONCAT('%', #{flowerType.typeName}, '%')
+        </if>
+        <if test="flowerType.flowerName != null and flowerType.flowerName != ''" >
+            and t2.FLOWER_NAME like CONCAT('%', #{flowerType.flowerName}, '%')
+        </if>
+    </select>
+</mapper>

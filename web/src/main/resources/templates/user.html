@@ -1,0 +1,135 @@
+<#include "_layout.html">
+<@layout>
+<head>
+    <title>用户</title>
+    <link href="${ctx}/static/css/user.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+
+        function FrameWH() {
+            var h = $(window).height() - 41 - 10 - 60 - 10 - 44 - 10;
+            $("iframe").css("height", h + "px");
+        }
+
+        $(function () {
+            var active;
+
+            layui.use(['layer', 'form', 'table', 'element'], function(){
+                var layer = layui.layer,
+                    form = layui.form,
+                    table = layui.table,
+                    element = layui.element;
+
+                active = {
+                    tabAdd: function(url, id, name) {
+                        element.tabAdd('user-tab', {
+                            title: name,
+                            content: '<iframe data-frameid="'+id+'" scrolling="auto" frameborder="0" src="'+url+'" style="width:900px;height:100%;"></iframe>',
+                            id: id
+                        });
+                        FrameWH();
+                    },
+                    tabChange: function(id) {
+                        element.tabChange('user-tab', id);
+                    },
+                    tabDelete: function (id) {
+                        element.tabDelete("user-tab", id);
+                    }
+                };
+
+                active.tabAdd('${ctx}/gatewayOrder', 1, '订单管理');
+                active.tabChange(1);
+                element.render('tab', 'user-tab');
+
+                // 订单列表
+                $('#orderPage').click(function () {
+                    var id = 1;
+                    var url = '${ctx}/gatewayOrder';
+                    var text = $(this).text();
+                    active.tabAdd(url, id, text);
+                    active.tabChange(id);
+                    element.render('tab', 'user-tab');
+                });
+
+                // 用户信息
+                $('#userInfoPage').click(function () {
+                    var id = 2;
+                    var url = '${ctx}/user/userInfo';
+                    var text = $(this).text();
+                    active.tabAdd(url, id, text);
+                    active.tabChange(id);
+                    element.render('tab', 'user-tab');
+                });
+
+                // 登录密码修改
+                $('#resetPwdPage').click(function () {
+                    var id = 3;
+                    var url = '${ctx}/resetPwd';
+                    var text = $(this).text();
+                    active.tabAdd(url, id, text);
+                    active.tabChange(id);
+                    element.render('tab', 'user-tab');
+                });
+
+                // 支付密码修改
+                $('#pwdPage').click(function () {
+                    var id = 4;
+                    var url = '${ctx}/user/payPwdForm';
+                    var text = $(this).text();
+                    active.tabAdd(url, id, text);
+                    active.tabChange(id);
+                    element.render('tab', 'user-tab');
+                });
+
+            });
+
+        })
+    </script>
+</head>
+<body>
+<div class="main">
+    <div class="left-content">
+        <div class="left-top"><h2><a href="">我的商城</a></h2></div>
+
+        <div class="left-user-info">
+            <div class="avatar"><img src="${ctx}/static/images/default_user_portrait.gif" alt="头像"></div>
+            <div class="handle">
+                <a href="${ctx}/logout">安全退出</a>
+            </div>
+            <div class="name">${(user.username)!"用户名"}</div>
+        </div>
+
+        <ul class="sidebar">
+            <li class="side-menu">
+                <a href="javascript:void(0)">
+                    <h3>交易管理</h3>
+                </a>
+                <ul>
+                    <li><a id="orderPage" name="orderPage" href="javascript:void(0)">订单列表</a></li>
+                    <li><a href="/favorite">我的收藏</a></li>
+                </ul>
+            </li>
+            <li class="side-menu">
+                <a href="javascript:void(0)">
+                    <h3>资料管理</h3>
+                </a>
+                <ul>
+                    <li><a id="userInfoPage" name="userInfoPage" href="javascript:void(0)">修改资料</a></li>
+                    <li><a id="resetPwdPage" name="resetPwdPage" href="javascript:void(0)">修改密码</a></li>
+                    <li><a id="pwdPage" name="pwdPage" href="javascript:void(0)">账户安全</a></li>
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+
+    <div class="right-content">
+        <div class="layui-tab tab" lay-allowClose="true" lay-filter="user-tab">
+            <ul class="layui-tab-title"></ul>
+            <div class="layui-tab-content"></div>
+        </div>
+    </div>
+</div>
+</body>
+</@layout>

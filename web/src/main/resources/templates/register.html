@@ -1,0 +1,108 @@
+<#assign ctx = request.getContextPath()>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>注册</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="${ctx}/static/css/login.css" rel="stylesheet" charset="utf-8" >
+    <link href="${ctx}/static/css/reset.css" rel="stylesheet" charset="utf-8" >
+    <link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+    <link href="${ctx}/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <script src="${ctx}/static/js/common/jquery.js"></script>
+    <script src="${ctx}/static/layui/layui.js"></script>
+    <script src="${ctx}/static/js/util.js"></script>
+
+    <script type="text/javascript">
+        function doRegister() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var passwordAgain = $("#passwordAgain").val();
+            var userPhone = $("#userPhone").val();
+            var captcha = $("#captcha").val();
+            $.ajax({
+                url: "${ctx}/doRegister",
+                type: "post",
+                dataType: "json",
+                data: {
+                    username: username,
+                    password: password,
+                    passwordAgain: passwordAgain,
+                    userPhone: userPhone,
+                    captcha: captcha
+                },
+                success: function (result) {
+                    if (!result.success) {
+                        $('#captchaImg').click();
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.msg(result.msg);
+                        });
+                    } else {
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.msg(result.msg);
+                        });
+                        delayUrl("/", 2000);
+                    }
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <div class="register_content clearfix" style="background:url('${ctx}/static/images/user_register_bag.png') no-repeat 0 138px;">
+        <input type="hidden" value="" id="iserror">
+        <form action="" id="" method="post">
+            <div class="register_box myfr">
+                <div class="title clearfix">
+                    <span class="myfl"></span>
+                    <h1 class="myfl">新用户注册</h1>
+                    <span class="myfr"></span>
+                </div>
+                <input class="username" id="username" name="username" placeholder="请输入您的用户名" type="text"  maxlength="20"/>
+                <p class="username_error"></p>
+                <input class="password" id="password" name="password" style="color: #666;" type="password" placeholder="请输入您的密码" maxlength="16"/>
+                <p class="password_error"></p>
+                <input id="passwordAgain" name="passwordAgain" type="password" style="color: #666;" placeholder="请重复您的密码" class="password_again" maxlength="16" />
+                <input id="userPhone" name="userPhone" type="text" placeholder="请输入手机号" maxlength="11" class="phone_num" />
+                <div class="photo_code clearfix">
+                    <input type="text" class="myfl" id="captcha" name="captcha" placeholder="请输入图片验证码" maxlength="4"/>
+                    <img id="captchaImg" name="captchaImg" src="${ctx}/captcha" class="myfr" alt="验证码" onclick="$(this).attr('src','${ctx}/captcha?' + new Date().getTime());"/>
+                </div>
+                <p class="photo_code_error"></p>
+                <#--<div class="clearfix message_code_box">
+                    <input type="text" class="message_code myfl" name="validCode" maxlength="6" placeholder="请输入手机验证码" value=""/>
+                    <a href="javascript:;" class="message_code_btn myfr">发送验证码</a>
+                    <span class="message_code_again"><em>60</em>秒重发</span>
+                </div>-->
+                <!-- <div class="my_agreement">
+                    <input type="checkbox" name="agreement" value="1" checked>我已仔细阅读并同意接受
+                                        <a href="" target="_blank">《用户使用协议》</a>
+              	</div> -->
+                <p class="source_error">8</p>
+                <a onclick="doRegister()" class="submit_btn">注册</a>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

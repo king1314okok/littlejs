@@ -1,0 +1,59 @@
+<#include "_layout.html">
+<@layout title = '找回密码'>
+<head>
+    <link href="${ctx}/static/css/findPwd.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="resetpwd">
+    <div class="content-row fl clearfix">
+        <span class="fl"> 用户名: </span>
+        <input id="username" name="username" class="clearfix" type="text">
+    </div>
+    <div class="prompt fl clearfix">
+        <span> 请输入你需要找回登录密码的用户名</span>
+    </div>
+    <div class="content-row fl clearfix">
+        <span class="fl"> 绑定手机: </span>
+        <input id="userPhone" name="userPhone" class="clearfix" type="text" maxlength="13">
+    </div>
+    <div class="prompt fl clearfix">
+        <span> 请输入该用户名绑定的手机号</span>
+    </div>
+    <div  class="content-row fl clearfix">
+        <span class="fl"> 验证码: </span>
+        <input id="captcha" name="captcha" class="fl" type="text" placeholder="请输入验证码" maxlength="4" autocomplete="off">
+        <img id="captchaImg" name="captchaImg" class="fl" src="${ctx}/captcha" alt="" onclick="$(this).attr('src','${ctx}/captcha?'+new Date().getTime());">
+    </div>
+    <button onclick="findPwd()">确定</button>
+</div>
+</body>
+<script type="text/javascript">
+    function findPwd() {
+        var username = $('#username').val();
+        var userPhone = $('#userPhone').val();
+        var captcha = $('#captcha').val();
+        $.ajax({
+            url: '${ctx}/doFindPwd',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                username: username,
+                userPhone: userPhone,
+                captcha: captcha
+            },
+            success: function (result) {
+                if (!result.success) {
+                    $('#captchaImg').click();
+                }
+                layer.msg(result.msg);
+            }
+        })
+    }
+
+    $(function () {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+        });
+    })
+</script>
+</@layout>

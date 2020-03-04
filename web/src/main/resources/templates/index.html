@@ -1,0 +1,444 @@
+<#include "_layout.html">
+<@layout>
+<head>
+	<title>小金山花卉</title>
+	<link rel="shortcut icon" href="${ctx}/static/images/favicon.ico" />
+</head>
+<body>
+	<!-- 商品分类 -->
+	<nav class="public-nav-layout">
+		<div class="wrapper">
+			<div class="all-category">
+				<div class="title">
+					<i></i>
+					<div class="h3"><a href="/flower/flowerList" class="target">所有商品分类</a></div>
+				</div>
+				<div class="category">
+					<ul class="menu">
+						<li cat_id="256" class="odd">
+							<div class="class">
+								<div class="h4">
+									<a href="javascript:void(0);" title="按鲜花用途" class="target">按鲜花用途</a>
+								</div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '用途'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="256" style="margin-top:1px;top:2px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '用途'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="2" class="even">
+							<div class="class">
+								<div class="h4">
+									<a href="javascript:void(0);" title="按鲜花花材" class="target">按鲜花花材</a>
+								</div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '花材'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="2" style="margin-top:1px;top:-58px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '花材'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="3" class="odd">
+							<div class="class">
+								<div class="h4">
+									<a href="javascript:void(0);" title="按鲜花价格" class="target">按鲜花价格</a>
+								</div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '价格'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="3" style="margin-top:122px;top:-118px;display:none;height:80px">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '价格'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="1" class="even">
+							<div class="class">
+								<div class="h4"><a href="javascript:void(0);" title="按对象订花" class="target">按对象订花</a></div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '对象'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="1" style="margin-top:183px;top:-178px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '对象'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="308" class="odd">
+							<div class="class">
+								<div class="h4"><a href="javascript:void(0);" title="按节日选花" class="target">按节日选花</a></div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '节日'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+							<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="308" style="margin-top:244px;top:-238px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '节日'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="470" class="even">
+							<div class="class">
+								<div class="h4"><a href="javascript:void(0);" title="按枝数订花" class="target">按枝数订花</a></div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '枝数'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="470" style="margin-top:305px;top:-298px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '枝数'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="593" class="odd">
+							<div class="class">
+								<div class="h4"><a href="javascript:void(0);" title="按类型订花" class="target">按类型订花</a></div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '类型'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="593" style="margin-top:366px;top:-358px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '类型'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+						<li cat_id="888" class="even">
+							<div class="class">
+								<div class="h4"><a href="javascript:void(0);" title="按颜色订花" class="target">按颜色订花</a></div>
+								<span class="recommend-class">
+									<#if codeList?? && (codeList?size > 0)>
+										<#list codeList as code>
+											<#if code.fatherName == '颜色'>
+												<a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a>
+											</#if>
+										</#list>
+									</#if>
+								</span>
+								<span class="arrow"></span>
+							</div>
+							<div class="sub-class" cat_menu_id="888" style="margin-top:427px;top:-418px;display:none">
+								<#if codeList?? && (codeList?size > 0)>
+									<#list codeList as code>
+										<#if code.fatherName == '颜色'>
+											<dl><dt><div class="h3"><a href="${ctx}/flower/flowerList?keyword=${code.typeName}" title="${code.typeName}" class="target">${code.typeName}</a></div></dt></dl>
+										</#if>
+									</#list>
+								</#if>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- tab选项 -->
+			<ul class="site-menu">
+				<li><a href="${ctx}" class="current" title="花市鲜花网">首页</a></li>
+				<li><a href="${ctx}/flower/flowerList">全部鲜花</a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=爱情鲜花">爱情鲜花</a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=生日鲜花">生日鲜花</a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=开业花篮">开业花篮</a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=高端鲜花" class="target">高端鲜花</a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=特价鲜花" class="target">特价鲜花<img src="/static/images/mark/discount.gif" class="nv_img" alt="特价鲜花"></a></li>
+				<li><a href="${ctx}/flower/flowerList?keyword=礼品专区" target="_blank">礼品专区<img src="/static/images/mark/hot.gif" style="position: absolute; top: 0px; z-index: auto; float: right; "></a></li>
+			</ul> 
+		</div>
+	</nav>
+	<div class="nch-breadcrumb-layout"></div>
+
+	<script type="text/javascript">
+		var uid = window.location.href.split("#V3");
+		var  fragment = uid[1];
+		if(fragment){
+			if (fragment.indexOf("V3") == 0) {document.cookie='uid=0';}
+			else {document.cookie='uid='+uid[1];}
+		}
+		$(function(){
+			$(".topic-scroll").hover(function(){
+				clearInterval(scrtime);
+			},function(){
+				scrtime = setInterval(function(){
+					ul = $(".topic-scroll ul");
+					var margin_top = parseInt(ul.css('margin-top'));
+					var liHeight = parseInt(ul.find("li:first").height()) ;
+//                console.log(ul.find("li:first").height());console.log(margin_top);
+					ul.animate({marginTop : -liHeight +"px"},4000,function(){
+						var first = ul.find("li:first");
+						ul.find("li:last").after('<li>'+first.html()+'</li>');
+						first.remove();
+						ul.css({marginTop:0});
+						var first2 = $(".topic-scroll ul li:nth-child(2)");
+						liHeight = parseInt(first2.height());
+						//  console.log(liHeight);
+					});
+				},4020);
+			}).trigger("mouseleave");
+		});
+	</script>
+
+	<!-- 疯狂抢购 特价促销 热评商品 鼠标移动效果 -->
+	<link href="/static/css/index.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${ctx}/static/js/home_index.js" charset="utf-8"></script>
+	<style type="text/css">
+	    .category {   display: block !important;}
+	    .topic-scroll ul li{padding: 0 10px;}
+	</style>
+
+	<div class="clear"></div>
+
+	<!-- 疯狂抢购 特价促销 热评商品-->
+	<div class="home-focus-layout">
+		<ul id="fullScreenSlides" class="full-screen-slides">
+			<li style="background: url(${ctx}/static/images/banner/banner6.jpg) center top / 1926px 450px no-repeat;  z-index: 800; display: list-item;"><a href="/flower/60" target="_blank">&nbsp;</a></li>
+			<li style="background: url(${ctx}/static/images/banner/banner1.jpg) center top / 1926px 450px no-repeat;  z-index: 800; display: list-item;"><a href="/flower/2" target="_blank">&nbsp;</a></li>
+			<li style="background: url(${ctx}/static/images/banner/banner2.jpg) center top / 1926px 450px no-repeat; display: none; z-index: 900;"><a href="/flower/7" target="_blank">&nbsp;</a></li>
+		</ul>
+	</div>
+
+	<!-- 延迟加载图片 -->
+	<script type="text/javascript" src="${ctx}/static/js/common/jquery.lazyload.js"></script>
+	<script>
+	    $(function(){
+	        $(".adv_layout img").lazyload({threshold:200,effect : "fadeIn"});
+	    });
+	</script>
+
+	<!-- 疯狂抢购 特价促销 热评商品 -->
+	<div class="home-sale-layout wrapper">
+		<div class="left-layout">
+			<ul class="tabs-nav">
+				<li class="tabs-selected"><i class="arrow"></i><h3>热卖商品</h3></li>
+				<li><i class="arrow"></i><h3>特价促销</h3></li>
+				<li><i class="arrow"></i><h3>热评商品</h3></li>
+			</ul>
+			<div class="tabs-panel sale-goods-list">
+				<ul>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/2"><img src="/static/images/tabs/1-1.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/16"><img src="/static/images/tabs/1-2.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/17"><img src="/static/images/tabs/1-3.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/18"><img src="/static/images/tabs/1-4.jpg" /></a></dd></dl></li>
+				</ul>
+			</div>
+			<div class="tabs-panel sale-goods-list tabs-hide">
+				<ul>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/52"><img src="/static/images/tabs/2-1.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/53"><img src="/static/images/tabs/2-2.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/54"><img src="/static/images/tabs/2-3.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/55"><img src="/static/images/tabs/2-4.jpg" /></a></dd></dl></li>
+				</ul>
+			</div>
+			<div class="tabs-panel sale-goods-list tabs-hide">
+				<ul>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/56"><img src="/static/images/tabs/3-1.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/57"><img src="/static/images/tabs/3-2.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/58"><img src="/static/images/tabs/3-3.jpg" /></a></dd></dl></li>
+					<li><dl><dd class="goods-thumb"><a class="target" href="/flower/59"><img src="/static/images/tabs/3-4.jpg" /></a></dd></dl></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- 特价促销 -->
+	<div class="home-standard-layout wrapper style-green adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>1F</span><h2 title="特价促销">特价促销</h2></div></div>
+			<div class="left-ads"><img alt="特价促销" src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_1.jpg" /></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav"><li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li></ul>
+			<div class="tabs-panel middle-goods-list ">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "特价促销" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 新品上架 -->
+	<div class="home-standard-layout wrapper style-red adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>2F</span><h2 title="新品上架">新品上架</h2></div></div>
+			<div class="left-ads"><img src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_2.jpg" alt="新品上架"/></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav"><li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li></ul>
+			<div class="tabs-panel middle-goods-list">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "新品上架" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 热卖商品 -->
+	<div class="home-standard-layout wrapper style-pink adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>3F</span><h2 title="热卖商品">热卖商品</h2></div></div>
+			<div class="left-ads"><img alt="热卖商品" src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_3.jpg" /></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav"><li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li></ul>
+			<div class="tabs-panel middle-goods-list ">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "热卖商品" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 热评商品 -->
+	<div class="home-standard-layout wrapper style-green adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>4F</span><h2 title="热评商品">热评商品</h2></div></div>
+			<div class="left-ads"><img alt="热评商品" src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_4.jpg" /></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav"><li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li></ul>
+			<div class="tabs-panel middle-goods-list ">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "热评商品" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 猜您喜欢 -->
+	<div class="home-standard-layout wrapper style-blue adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>5F</span><h2 title="猜您喜欢">猜您喜欢</h2></div></div>
+			<div class="left-ads"><img alt="猜您喜欢" src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_5.jpg" /></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav"><li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li></ul>
+			<div class="tabs-panel middle-goods-list ">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "猜您喜欢" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 开业花篮 -->
+	<div class="home-standard-layout wrapper style-brown adv_layout">
+		<div class="left-sidebar">
+			<div class="title"><div class="txt-type"><span>6F</span><h2 title="开业花篮">开业花篮</h2></div></div>
+			<div class="left-ads"><img alt="开业花篮" src="${ctx}/static/images/loading.gif" data-original="${ctx}/static/images/index/left_6.jpg" /></div>
+		</div>
+		<div class="middle-layout">
+			<ul class="tabs-nav">
+				<li class="tabs-selected"><i class="arrow"></i><div class="h3">商品推荐</div></li>
+			</ul>
+			<div class="tabs-panel middle-goods-list ">
+				<ul>
+				<#list flowerList as flower>
+					<#if flower.typeName == "开业花篮" && flower.flowerStatus == "00">
+						<li><dl><dt class="goods-name"><a class="target" href="/flower/${flower.flowerId}" title="${flower.flowerName}">${flower.flowerName}</a></dt><dd class="goods-thumb"><a class="target" href="/flower/${flower.flowerId}"><img src="${ctx}/static/images/loading.gif" data-original="${(flower.pictureUrl)!""}" alt="网上送花"></a></dd><dd class="goods-price"><em>￥${flower.discount * flower.price}</em><span class="original">￥${flower.price}.00</span></dd></dl></li>
+					</#if>
+				</#list>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+</@layout>

@@ -1,0 +1,118 @@
+.main {
+    width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left-content {
+    width: 210px;
+    float: left;
+}
+
+.left-content .left-top {
+    background-color: #EC4F4A;
+    width: 100%;
+    height: 40px;
+    position: relative;
+    z-index: 3;
+}
+
+.left-top a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFF;
+    height: 20px;
+    float: left;
+    padding: 10px 0 10px 20px;
+}
+
+.left-content .left-user-info {
+    background-color: #FD6760;
+    padding: 15px 20px;
+    overflow: hidden;
+}
+
+.left-user-info .avatar img{
+    width: 72px;
+    height: 72px;
+    float: left;
+}
+
+.left-user-info .handle {
+    width: 80px;
+    float: right;
+}
+
+.handle a {
+    line-height: 24px;
+    color: #FECAC8;
+    display: block;
+    height: 24px;
+    clear: both;
+}
+
+.left-user-info .name {
+    font: 600 14px/20px "microsoft yahei";
+    color: #FFF;
+    padding-top: 8px;
+    display: block;
+    clear: both;
+}
+
+.sidebar {
+    background-color: #FFF;
+    margin-top: 6px;
+    border: solid 1px #E7E7E7;
+}
+
+.sidebar .side-menu:first-child {
+    background-color: #F7F7F7;
+    border-bottom-style: solid;
+}
+
+.sidebar .side-menu {
+    width: 100%;
+    margin: 0;
+    border-bottom: dotted 1px #E7E7E7;
+    overflow: hidden;
+}
+
+.side-menu a {
+    display: block;
+    margin: 12px;
+    cursor: pointer;
+}
+
+.side-menu a h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    line-height: 20px;
+    height: 20px;
+    padding-left: 7px;
+    display: block;
+}
+
+.side-menu ul {
+    margin-bottom: 10px;
+}
+
+.side-menu ul li a {
+    background: none;
+    line-height: 20px;
+    color: #777;
+    width: auto;
+    padding: 6px 0 6px 20px;
+    margin: 0;
+}
+
+.right-content {
+    float: left;
+}
+
+.right-content .tab {
+    margin-left: 20px;
+    height: 700px;
+}
+
+

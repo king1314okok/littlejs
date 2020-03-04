@@ -1,0 +1,56 @@
+<#include "../_layout.html">
+<@layout>
+<head>
+    <title>找回密码</title>
+
+    <script type="text/javascript">
+        $(function () {
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+            });
+
+            $("#submitBtn").click(function(){
+                var username = $('#username').val();
+                var userEmail = $('#userEmail').val();
+                $.ajax({
+                    url: '${ctx}/doFindPwd',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        username: username,
+                        userEmail: userEmail
+                    },
+                    success: function(result) {
+                        layer.msg(result.msg);
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="center layui-form" style="margin-top: 20px">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" id="username" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input" style="width:200px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱号</label>
+        <div class="layui-input-block">
+            <input type="text" id="userEmail" name="userEmail" placeholder="请输入绑定的邮箱" autocomplete="off" class="layui-input" style="width:200px;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" id="submitBtn" name="submitBtn" lay-submit>立即找回</button>
+        </div>
+    </div>
+</div>
+</body>
+</@layout>
